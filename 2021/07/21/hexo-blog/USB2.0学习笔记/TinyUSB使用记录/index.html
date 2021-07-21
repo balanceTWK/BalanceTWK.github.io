@@ -6,27 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://BalanceTWK.github.io">
-  <title>TriCore 与 RT-Thread（TC264 移植） | BalanceTWK的博客</title>
+  <title>TinyUSB使用记录 | BalanceTWK的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="TriCore 与 RT-Thread（TC264 移植）本文记录了我对 TriCore 上下文切换运行机制的理解以及 TriCore 内核移植 API 的注释分析。由于水平有限，再加上阅读的手册都是英文的，所以理解上如果存在偏差是难免的，还请公众号留言指正！（事实上，写完这篇文章后，发现 TriCore 架构还有很多可以发掘的点，等有时间再去验证心中所想吧。。。）">
+  <meta name="description" content="TinyUSB 使用记录TinyUSB 仓库目录结构如下：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TriCore 与 RT-Thread（TC264 移植）">
-<meta property="og:url" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/index.html">
+<meta property="og:title" content="TinyUSB使用记录">
+<meta property="og:url" content="http://balancetwk.github.io/2021/07/21/hexo-blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="BalanceTWK的博客">
-<meta property="og:description" content="TriCore 与 RT-Thread（TC264 移植）本文记录了我对 TriCore 上下文切换运行机制的理解以及 TriCore 内核移植 API 的注释分析。由于水平有限，再加上阅读的手册都是英文的，所以理解上如果存在偏差是难免的，还请公众号留言指正！（事实上，写完这篇文章后，发现 TriCore 架构还有很多可以发掘的点，等有时间再去验证心中所想吧。。。）">
+<meta property="og:description" content="TinyUSB 使用记录TinyUSB 仓库目录结构如下：">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/__disable()_1.png">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/__disable()_2.png">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/ICR_IE.png">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/context.png">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/context_restore_save.png">
-<meta property="og:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/LinkWord.png">
-<meta property="article:published_time" content="2021-02-10T04:43:00.000Z">
-<meta property="article:modified_time" content="2021-02-10T10:39:48.911Z">
+<meta property="article:published_time" content="2021-07-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-21T15:56:44.858Z">
 <meta property="article:author" content="BalanceTWK">
-<meta property="article:tag" content="TriCore">
+<meta property="article:tag" content="USB">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/picture/__disable()_1.png">
   
     <link rel="alternative" href="/atom.xml" title="BalanceTWK的博客" type="application/atom+xml">
   
@@ -172,158 +165,53 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hexo-blog/TriCore_Note/TriCore 与 RT-Thread（TC264 BSP）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-hexo-blog/USB2.0学习笔记/TinyUSB使用记录" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      TriCore 与 RT-Thread（TC264 移植）
+      TinyUSB使用记录
     </h1>
   
 
         
-        <a href="/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-02-10T04:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-10</time>
+        <a href="/2021/07/21/hexo-blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="archive-article-date">
+  	<time datetime="2021-07-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="TriCore-与-RT-Thread（TC264-移植）"><a href="#TriCore-与-RT-Thread（TC264-移植）" class="headerlink" title="TriCore 与 RT-Thread（TC264 移植）"></a>TriCore 与 RT-Thread（TC264 移植）</h1><p>本文记录了我对 TriCore 上下文切换运行机制的理解以及 TriCore 内核移植 API 的注释分析。由于水平有限，再加上阅读的手册都是英文的，所以理解上如果存在偏差是难免的，还请公众号留言指正！（事实上，写完这篇文章后，发现 TriCore 架构还有很多可以发掘的点，等有时间再去验证心中所想吧。。。）</p>
+        <h1 id="TinyUSB-使用记录"><a href="#TinyUSB-使用记录" class="headerlink" title="TinyUSB 使用记录"></a>TinyUSB 使用记录</h1><p>TinyUSB 仓库目录结构如下：</p>
 <span id="more"></span>
 
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>TriCore 提供了一种硬件的上下文机制，这种机制是专为嵌入式实时操作系统设计的，他的目的就是为了能提高线程切换的效率。</p>
-<h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><p>我使用的是 windows 平台下的 AURIX-Studio IDE ， AURIX-Studio IDE 是英飞凌公司开发的基于 eclipse 的集成开发环境。使用的工具链是 altium 的 TASKING 工具链。在整个移植过程中几乎没有写汇编代码，用的一些函数，都是工具链提供的。</p>
-<p>比如:</p>
-<ol>
-<li>写一个寄存器</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__mtcr(CPU_PSW, <span class="number">0x00000980</span>);    <span class="comment">/* 对应的汇编指令就是： mtcr */</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── docs            # 文档</span><br><span class="line">├── examples        # 例子</span><br><span class="line">├── hw</span><br><span class="line">│   ├── bsp         # 板级驱动适配</span><br><span class="line">│   └── mcu         # mcu 外设驱动</span><br><span class="line">├── lib             # 第三方库</span><br><span class="line">├── src             # TinyUSB 所有的源码都在这儿。</span><br><span class="line">├── test            # 测试代码</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>读一个寄存器</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">icr.U = __mfcr(CPU_ICR);    <span class="comment">/* 对应的汇编指令就是： mfcr */</span></span><br></pre></td></tr></table></figure>
+<h2 id="一-下载编译-TinyUSB-原始仓库工程"><a href="#一-下载编译-TinyUSB-原始仓库工程" class="headerlink" title="(一). 下载编译 TinyUSB 原始仓库工程"></a>(一). 下载编译 TinyUSB 原始仓库工程</h2><h3 id="1-下载源码"><a href="#1-下载源码" class="headerlink" title="1. 下载源码"></a>1. 下载源码</h3><p>TinyUSB 仓库不仅包含了 USB 协议栈源码，还包含了很多子仓库。所以我们下载 TinyUSB 源码的时候需要加 <code>--recursive</code> 参数，递归下载子仓库。</p>
+<p><code>git clone --recursive https://github.com/hathach/tinyusb.git</code></p>
+<h3 id="2-安装开发环境"><a href="#2-安装开发环境" class="headerlink" title="2. 安装开发环境"></a>2. 安装开发环境</h3><p>安装通用的 arm gcc 工具链。</p>
+<p><code>sudo apt install gcc-arm-none-eabi</code></p>
+<h3 id="3-编译"><a href="#3-编译" class="headerlink" title="3. 编译"></a>3. 编译</h3><p>本次编译以 stm32f103bluepill 开发板 csc_msc 为例，输入命令如下：</p>
+<p><code>make -C examples/device/cdc_msc BOARD=stm32f103bluepill all V=1</code></p>
+<p>[^BOARD=stm32f103bluepill]: 表示要编译的目标开发板子。板子名称可以看 <code>hw/bsp</code> 目录。</p>
+<h2 id="二-移植-TinyUSB-协议栈到自己的工程上"><a href="#二-移植-TinyUSB-协议栈到自己的工程上" class="headerlink" title="(二). 移植 TinyUSB 协议栈到自己的工程上"></a>(二). 移植 TinyUSB 协议栈到自己的工程上</h2><p>在之前 <strong>编译</strong> 章节里，我有提到 <code>V=1</code> 用于打印详细的编译参数。</p>
+<p>得到的编译参数如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS  -flto -mthumb -mabi=aapcs -mcpu=cortex-m3 -mfloat-abi=soft -nostdlib -nostartfiles -DSTM32F103xB -DCFG_TUSB_MCU=OPT_MCU_STM32F1 -ggdb -fdata-sections -ffunction-sections -fsingle-precision-constant -fno-strict-aliasing -Wdouble-promotion -Wstrict-prototypes -Wstrict-overflow -Wall -Wextra -Werror -Wfatal-errors -Werror-implicit-function-declaration -Wfloat-equal -Wundef -Wshadow -Wwrite-strings -Wsign-compare -Wmissing-format-attribute -Wunreachable-code -Wcast-align -Wcast-function-type -Os -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/lib/CMSIS_5/CMSIS/Core/Include -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/hw/mcu/st/cmsis_device_f1/Include -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/hw/mcu/st/stm32f1xx_hal_driver/Inc -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/hw/bsp/stm32f103bluepill -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/ -Isrc -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/hw -I/home/balance/Desktop/workspace/usb_tuya/tinyusb/src </span><br></pre></td></tr></table></figure>
 
-<h2 id="RT-Thread-CPU-架构级别的移植-API-列表"><a href="#RT-Thread-CPU-架构级别的移植-API-列表" class="headerlink" title="RT-Thread CPU 架构级别的移植 API 列表"></a>RT-Thread CPU 架构级别的移植 API 列表</h2><p>需要移植的 API 接口说明，在 RT-Thread 文档中心《内核移植》章节里已经讲的很详细了，需要了解详情的可以去以下链接查看！</p>
-<hr>
-<p>以下是需要实现的<strong>函数和变量</strong>的列表：</p>
-<table>
-<thead>
-<tr>
-<th><strong>函数和变量</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>rt_base_t rt_hw_interrupt_disable(void);</td>
-<td>关闭全局中断</td>
-</tr>
-<tr>
-<td>void rt_hw_interrupt_enable(rt_base_t level);</td>
-<td>打开全局中断</td>
-</tr>
-<tr>
-<td>rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter, rt_uint8_t *stack_addr, void *texit);</td>
-<td>线程栈的初始化，内核在线程创建和线程初始化里面会调用这个函数</td>
-</tr>
-<tr>
-<td>void rt_hw_context_switch_to(rt_uint32 to);</td>
-<td>没有来源线程的上下文切换，在调度器启动第一个线程的时候调用，以及在 signal 里面会调用</td>
-</tr>
-<tr>
-<td>void rt_hw_context_switch(rt_uint32 from, rt_uint32 to);</td>
-<td>从 from 线程切换到 to 线程，用于线程和线程之间的切换</td>
-</tr>
-<tr>
-<td>void rt_hw_context_switch_interrupt(rt_uint32 from, rt_uint32 to);</td>
-<td>从 from 线程切换到 to 线程，用于中断里面进行切换的时候使用</td>
-</tr>
-<tr>
-<td>rt_uint32_t rt_thread_switch_interrupt_flag;</td>
-<td>表示需要在中断里进行切换的标志</td>
-</tr>
-<tr>
-<td>rt_uint32_t rt_interrupt_from_thread, rt_interrupt_to_thread;</td>
-<td>在线程进行上下文切换时候，用来保存 from 和 to 线程</td>
-</tr>
-</tbody></table>
-<h2 id="TriCore-移植代码注释分析"><a href="#TriCore-移植代码注释分析" class="headerlink" title="TriCore 移植代码注释分析"></a>TriCore 移植代码注释分析</h2><h3 id="一-关闭全局中断-rt-hw-interrupt-disable"><a href="#一-关闭全局中断-rt-hw-interrupt-disable" class="headerlink" title="一. 关闭全局中断 rt_hw_interrupt_disable()"></a>一. 关闭全局中断 rt_hw_interrupt_disable()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IFX_INLINE boolean <span class="title">IfxCpu_disableInterrupts</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    boolean enabled;</span><br><span class="line">    enabled = IfxCpu_areInterruptsEnabled();</span><br><span class="line">    __disable();</span><br><span class="line">    __nop();</span><br><span class="line">    <span class="keyword">return</span> enabled;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * rt_base_t rt_hw_interrupt_disable(void);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">rt_base_t</span> <span class="title">rt_hw_interrupt_disable</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">rt_base_t</span> level;</span><br><span class="line">    level = IfxCpu_disableInterrupts();</span><br><span class="line">    <span class="keyword">return</span> level;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>__disable();</code> 是工具链直接提供的函数。这个函数的作用就是关闭芯片全局中断。</p>
-<p>单步调试可以看到这条函数究竟做了什么：</p>
-<p><img src="./picture/__disable()_1.png" alt="step1:__disable()"></p>
-<p><img src="./picture/__disable()_2.png" alt="step2:__disable()"></p>
-<p>由上图可以看到，当执行完 <code>diable</code> 指令后，TriCore 的 ICR 寄存器的 IE 位由 1 变为 0 了。IE 位的功能说明如下图所示：</p>
-<p><img src="./picture/ICR_IE.png" alt="ICR_IE"></p>
-<p>IE 位是一个全局的中断使能位，当进入中断时，IE 位会自动的置为 0，当中断服务函数执行 rfe 指令后，会自动的恢复进中断前的值。另外， IE 位的值还可以被  <code>enable</code>; <code>disable</code>; <code>mtcr</code>; <code>bisr</code>; 等指令更新。</p>
-<h3 id="二-打开全局中断-rt-hw-interrupt-enable"><a href="#二-打开全局中断-rt-hw-interrupt-enable" class="headerlink" title="二. 打开全局中断 rt_hw_interrupt_enable()"></a>二. 打开全局中断 rt_hw_interrupt_enable()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IFX_INLINE <span class="keyword">void</span> <span class="title">IfxCpu_restoreInterrupts</span><span class="params">(boolean enabled)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (enabled != FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        __enable();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">IFX_INLINE <span class="keyword">void</span> <span class="title">restoreInterrupts</span><span class="params">(boolean enabled)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    IfxCpu_restoreInterrupts(enabled);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * void rt_hw_interrupt_enable(rt_base_t level);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_interrupt_enable</span><span class="params">(<span class="keyword">rt_base_t</span> level)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    restoreInterrupts((boolean)level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有了前面关闭全局中断的分析，这里打开全局中断的就不再赘述了。<code>rt_hw_interrupt_enable</code> 最终执行的有效函数就是 <code>__enable();</code> ,这个函数对应的 CPU 指令就是 <code>enable</code> ,这条指令的作用就是将 TriCore 的 ICR 寄存器的 IE 位置为 1 。</p>
-<h3 id="三-实现线程栈初始化-rt-hw-stack-init"><a href="#三-实现线程栈初始化-rt-hw-stack-init" class="headerlink" title="三. 实现线程栈初始化 rt_hw_stack_init()"></a>三. 实现线程栈初始化 rt_hw_stack_init()</h3><p>在理解 <code>rt_hw_stack_init</code> 这个函数前，我需要先向大家介绍下 TriCore 的硬件上下文机制。</p>
-<h4 id="1-上下文类型区分"><a href="#1-上下文类型区分" class="headerlink" title="1. 上下文类型区分"></a>1. 上下文类型区分</h4><p><img src="./picture/context.png" alt="context"></p>
-<p>如上图所示 TriCore 内核的上下文分为两组：</p>
-<ol>
-<li>上层上下文：外部中断；陷阱；函数调用；会自动保存恢复上下文。</li>
-<li>下层上下文：如果要改变内容，需要显式的使用代码指令去读写寄存器。</li>
-</ol>
-<p><strong>下层上下文寄存器类似于全局寄存器。在 外部中断；陷阱；函数调用；中对这些寄存器做修改后，事件返回后值仍然会存在。</strong><br>这一特性意味着：</p>
-<ol>
-<li>函数可以通过下层上下文寄存器传递参数，传递返回值。</li>
-<li>中断与陷阱处理函数在使用下层上下文寄存器之前必须保存下层上下文寄存器的值，结束处理后，需要恢复下层上下文寄存器。</li>
-</ol>
-<p><strong>什么时候会保存恢复上下文：</strong></p>
-<p><img src="./picture/context_restore_save.png" alt="context_restore_save"></p>
-<h4 id="2-上下文保存空间-CSA-（-Context-Save-Area-）"><a href="#2-上下文保存空间-CSA-（-Context-Save-Area-）" class="headerlink" title="2. 上下文保存空间 CSA （ Context Save Area ）"></a>2. 上下文保存空间 CSA （ Context Save Area ）</h4><p>TriCore 架构使用固定大小的上下文保存区域的链表。一个 CSA 存储 16 个 word ，按 16 个 word 的边界对齐，每个 CSA 正好可以完整的存储一个上层上下文或者下层上下文。CSAs 通过一个 LinkWord 链接在一起。</p>
-<p>LinkWord 的内容通过如下图所示的关系可以转换成一个有效的 CSA 地址。</p>
-<p><img src="./picture/LinkWord.png" alt="LinkWord"></p>
-<h4 id="3-如何访问-CSA"><a href="#3-如何访问-CSA" class="headerlink" title="3. 如何访问 CSA"></a>3. 如何访问 CSA</h4><p>TriCore 内核有三个寄存器用来操作访问 CSA 的信息：</p>
-<ol>
-<li>FCX： 这个寄存器的值用来指向全局的空闲的 CSA 列表头指针地址信息。（总是指向可用的 CSA 列表头指针）</li>
-<li>PCX： 这个寄存器的值用来保存前一个任务的 CSA 列表头指针地址信息。PCX 同时也是 PCXI 寄存器的一部分。</li>
-<li>LCX： 如果 LCX 寄存器的值与 PCX 的值一致，那么就会触发一个  FCD 陷阱。（FCD：空闲上下文空间消耗殆尽的异常）</li>
-</ol>
-<h4 id="4-rt-hw-stack-init-的实现"><a href="#4-rt-hw-stack-init-的实现" class="headerlink" title="4. rt_hw_stack_init() 的实现"></a>4. rt_hw_stack_init() 的实现</h4><p><code>rt_hw_stack_init</code> 的实现如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">rt_uint8_t</span> *<span class="title">rt_hw_stack_init</span><span class="params">(<span class="keyword">void</span>       *tentry,</span></span></span><br><span class="line"><span class="params"><span class="function">                             <span class="keyword">void</span>       *parameter,</span></span></span><br><span class="line"><span class="params"><span class="function">                             <span class="keyword">rt_uint8_t</span> *stack_addr,</span></span></span><br><span class="line"><span class="params"><span class="function">                             <span class="keyword">void</span>       *texit)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *lower_csa = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *upper_csa = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    rt_hw_interrupt_disable();</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* DSync to ensure that buffering is not a problem. */</span></span><br><span class="line">        __dsync();</span><br><span class="line">        <span class="comment">/* 通过 FCX 寄存器获取一个空闲的 CSA 作为下层上下文。 */</span></span><br><span class="line">        lower_csa = LINKWORD_TO_ADDRESS( __mfcr( CPU_FCX ) );</span><br><span class="line">        <span class="keyword">if</span>( <span class="literal">NULL</span> != lower_csa )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">/* 通过下层上下文的保存的 LinkWord 获取到上层上下文。 */</span></span><br><span class="line">            upper_csa = LINKWORD_TO_ADDRESS( lower_csa[ <span class="number">0</span> ] );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* Check that we have successfully reserved two CSAs. */</span></span><br><span class="line">        <span class="keyword">if</span>( ( <span class="literal">NULL</span> != lower_csa ) &amp;&amp; ( <span class="literal">NULL</span> != upper_csa ) )</span><br><span class="line">        &#123;</span><br><span class="line">            __disable();</span><br><span class="line">            __dsync();</span><br><span class="line">            <span class="comment">/* 由于已经使用掉了两个 CSA ，这里需要手动更新 FCX 寄存器的值为下一个空闲的 CSA 。 */</span></span><br><span class="line">            __mtcr( CPU_FCX, upper_csa[ <span class="number">0</span> ] );</span><br><span class="line">            __isync();</span><br><span class="line">            __enable();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">/* Simply trigger a context list depletion trap. */</span></span><br><span class="line">            __svlcx();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    rt_hw_interrupt_enable((<span class="keyword">rt_base_t</span>)RT_NULL);</span><br><span class="line">    <span class="comment">/* 将获取到的上层 CSA 空间全部清零。 */</span></span><br><span class="line">    <span class="built_in">memset</span>( upper_csa, <span class="number">0</span>, TRICORE_NUM_WORDS_IN_CSA * <span class="keyword">sizeof</span>( <span class="keyword">unsigned</span> <span class="keyword">long</span> ) );</span><br><span class="line">    <span class="comment">/* Upper Context. */</span></span><br><span class="line">    upper_csa[ <span class="number">2</span> ] = ( <span class="keyword">unsigned</span> <span class="keyword">long</span> )stack_addr;       <span class="comment">/* 对应 A10 寄存器; 这个寄存器用于保存栈指针 */</span></span><br><span class="line">    upper_csa[ <span class="number">1</span> ] = TRICORE_SYSTEM_PROGRAM_STATUS_WORD;      <span class="comment">/* 对应 PSW 寄存器； 这个寄存器用于保存当前线程的初始状态*/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 将获取到的下层 CSA 空间全部清零。 */</span></span><br><span class="line">    <span class="built_in">memset</span>( lower_csa, <span class="number">0</span>, TRICORE_NUM_WORDS_IN_CSA * <span class="keyword">sizeof</span>( <span class="keyword">unsigned</span> <span class="keyword">long</span> ) );</span><br><span class="line">    <span class="comment">/* Lower Context. */</span></span><br><span class="line">    lower_csa[ <span class="number">8</span> ] = ( <span class="keyword">unsigned</span> <span class="keyword">long</span> ) parameter;      <span class="comment">/* 对应 A4 寄存器;  用于保存函数的入参。 */</span></span><br><span class="line">    lower_csa[ <span class="number">1</span> ] = ( <span class="keyword">unsigned</span> <span class="keyword">long</span> ) tentry;         <span class="comment">/* 对应 A11 寄存器; 用于保存 PC 指针。 */</span></span><br><span class="line">    <span class="comment">/* 将上层上下文的地址保存到下层上下文的 LinkWord 中。 */</span></span><br><span class="line">    lower_csa[ <span class="number">0</span> ] = ( TRICORE_INITIAL_PCXI_UPPER_CONTEXT_WORD | ( <span class="keyword">unsigned</span> <span class="keyword">long</span> ) ADDRESS_TO_LINKWORD( upper_csa ) );</span><br><span class="line">    <span class="comment">/* Save the link to the CSA in the top of stack. */</span></span><br><span class="line">    stack_addr = (<span class="keyword">unsigned</span> <span class="keyword">long</span> * ) ADDRESS_TO_LINKWORD( lower_csa );</span><br><span class="line">    <span class="comment">/* DSync to ensure that buffering is not a problem. */</span></span><br><span class="line">    __dsync();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* !!!注意：这里返回的其实已经不是栈地址了，而是下层 CSA 的 LinkWord 值。*/</span></span><br><span class="line">    <span class="keyword">return</span> stack_addr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="四-实现上下文切换"><a href="#四-实现上下文切换" class="headerlink" title="四. 实现上下文切换"></a>四. 实现上下文切换</h3><p>RT-Thread 的 libcpu 抽象层需要实现以下三个线程切换相关的函数：</p>
-<p>1） rt_hw_context_switch_to()：没有来源线程，切换到目标线程，在调度器启动第一个线程的时候被调用。</p>
-<p>2） rt_hw_context_switch()：在线程环境下，从当前线程切换到目标线程。</p>
-<p>3） rt_hw_context_switch_interrupt ()：在中断环境下，从当前线程切换到目标线程。</p>
-<h4 id="实现-rt-hw-context-switch-to"><a href="#实现-rt-hw-context-switch-to" class="headerlink" title="实现 rt_hw_context_switch_to()"></a>实现 rt_hw_context_switch_to()</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_context_switch_to</span><span class="params">(<span class="keyword">rt_ubase_t</span> to)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ulMFCR = <span class="number">0UL</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *lower_csa = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *upper_csa = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Set-up the timer interrupt. */</span></span><br><span class="line">    rt_hw_systick_init();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 初始化通用目的服务请求寄存器 */</span></span><br><span class="line">    IfxSrc_init(GPSR[TRICORE_CPU_ID], (IfxSrc_Tos)TRICORE_CPU_ID, <span class="number">1</span>);</span><br><span class="line">    IfxSrc_enable(GPSR[TRICORE_CPU_ID]);</span><br><span class="line"></span><br><span class="line">    __disable();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 初始化系统配置寄存器为初值 */</span></span><br><span class="line">    __mtcr( CPU_SYSCON, TRICORE_INITIAL_SYSCON );</span><br><span class="line">    __isync();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 确保 PSW 寄存器的值是正确的 */</span></span><br><span class="line">    ulMFCR = __mfcr( CPU_PSW );</span><br><span class="line">    ulMFCR &amp;= TRICORE_RESTORE_PSW_MASK;</span><br><span class="line">    __dsync();</span><br><span class="line">    __mtcr( CPU_PSW, ulMFCR );</span><br><span class="line">    __isync();</span><br><span class="line"></span><br><span class="line">    __dsync();</span><br><span class="line">    <span class="comment">/* 将 to 线程的 LinkWord 赋值给 PCXI */</span></span><br><span class="line">    __mtcr(CPU_PCXI, (<span class="keyword">unsigned</span> <span class="keyword">long</span>)( *( (<span class="keyword">unsigned</span> <span class="keyword">long</span> *)to ) ) );</span><br><span class="line">    __isync();</span><br><span class="line">    __nop();</span><br><span class="line">    __rslcx();</span><br><span class="line">    __nop();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 当执行 fre 指令后，CPU 的线程会恢复成 PCXI 寄存器指向的 CSA 内容 */</span></span><br><span class="line">    <span class="function">__asm <span class="title">volatile</span><span class="params">( <span class="string">&quot;rfe&quot;</span> )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Will not get here. */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="实现-rt-hw-context-switch"><a href="#实现-rt-hw-context-switch" class="headerlink" title="实现 rt_hw_context_switch()"></a>实现 rt_hw_context_switch()</h4><p>在 TriCore 的移植实现中，这个函数 <code>rt_hw_context_switch</code> 并不会直接切换线程而是将当前线程的 CSA LinkWord 也就是 from 先保存到一个全局变量当中；要切换的线程的 CSA LinkWord 也就是 to 同样保存到一个全局变量中。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_context_switch</span><span class="params">(<span class="keyword">rt_ubase_t</span> from, <span class="keyword">rt_ubase_t</span> to)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">rt_base_t</span> level;</span><br><span class="line"></span><br><span class="line">    level = rt_hw_interrupt_disable();</span><br><span class="line">    current_thread = from;</span><br><span class="line">    to_thread = to;</span><br><span class="line">    rt_hw_interrupt_enable(level);</span><br><span class="line">    <span class="comment">/* 在保存完线程 CSA LinkWord 后，判断这次线程切换是否是 systick 触发的线程切换。 */</span></span><br><span class="line">    <span class="keyword">if</span>(systick_flag == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* 如果不是 systick 引发的线程切换，那么就触发一个线程切换的异常函数，这个异常函数里会真正做线程切换的事情。 */</span></span><br><span class="line">        __syscall( <span class="number">0</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个函数不会直接切换线程，真正切换线程的函数是在 <code>trigger_scheduling()</code> 中。</p>
-<h4 id="实现-rt-hw-context-switch-interrupt"><a href="#实现-rt-hw-context-switch-interrupt" class="headerlink" title="实现 rt_hw_context_switch_interrupt()"></a>实现 rt_hw_context_switch_interrupt()</h4><p>同样，在 TriCore 的移植实现中，这个函数 <code>rt_hw_context_switch_interrupt</code> 并不会直接切换线程而是将当前线程的 CSA LinkWord 也就是 from 先保存到一个全局变量当中；要切换的线程的 CSA LinkWord 也就是 to 同样保存到一个全局变量中。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_context_switch_interrupt</span><span class="params">(<span class="keyword">rt_ubase_t</span> from, <span class="keyword">rt_ubase_t</span> to)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">rt_base_t</span> level;</span><br><span class="line"></span><br><span class="line">    level = rt_hw_interrupt_disable();</span><br><span class="line">    current_thread = from;</span><br><span class="line">    to_thread = to;</span><br><span class="line">    rt_hw_interrupt_enable(level);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 在保存完线程 CSA LinkWord 后,会给 SETR 位置 1，这样会触发一个异常陷阱函数。在这个陷阱函数里才会去真正的切换线程。 */</span></span><br><span class="line">    GPSR[TRICORE_CPU_ID]-&gt;B.SETR = <span class="number">1</span>;</span><br><span class="line">    __isync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="统一的触发线程切换的函数-trigger-scheduling"><a href="#统一的触发线程切换的函数-trigger-scheduling" class="headerlink" title="统一的触发线程切换的函数 trigger_scheduling()"></a>统一的触发线程切换的函数 trigger_scheduling()</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">trigger_scheduling</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">rt_ubase_t</span> from, to;</span><br><span class="line">    <span class="keyword">rt_base_t</span> level;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> *current_upper_csa = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 获取 from 和 to 线程的 CSA 信息。 */</span></span><br><span class="line">    level = rt_hw_interrupt_disable();</span><br><span class="line">    from = current_thread;</span><br><span class="line">    to = to_thread;</span><br><span class="line">    to_thread = RT_NULL;</span><br><span class="line">    rt_hw_interrupt_enable(level);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 判断是否需要切换到 to 线程 */</span></span><br><span class="line">    <span class="keyword">if</span>( to )</span><br><span class="line">    &#123;</span><br><span class="line">        __disable();</span><br><span class="line">        __dsync();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 获取当前线程的 CSA LinkWord */</span></span><br><span class="line">        current_upper_csa = LINKWORD_TO_ADDRESS( __mfcr( CPU_PCXI ) );</span><br><span class="line">        <span class="comment">/* 保存当前线程的 CSA 上下文 */</span></span><br><span class="line">        *( (<span class="keyword">unsigned</span> <span class="keyword">long</span> *)from ) = current_upper_csa[ <span class="number">0</span> ];</span><br><span class="line">        <span class="comment">/* 将 to 线程的 CSA 地址赋值给当前线程的上层上下文的 LinkWord ，用于 TriCore 自动切换线程。*/</span></span><br><span class="line">        current_upper_csa[ <span class="number">0</span> ] = *( (<span class="keyword">unsigned</span> <span class="keyword">long</span> *)to );</span><br><span class="line">        GPSR[TRICORE_CPU_ID]-&gt;B.SETR = <span class="number">0</span>;</span><br><span class="line">        __isync();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>trigger_scheduling()</code>  分别在三个地方使用，<strong>而且必须使用内联的方式！</strong></p>
-<ol>
-<li>首先系统滴答时钟：</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noinline)) <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tricore_systick_handler</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">rt_base_t</span> level;</span><br><span class="line">    IfxStm_Timer_acknowledgeTimerIrq(&amp;tricore_timers[TRICORE_CPU_ID]);</span><br><span class="line"></span><br><span class="line">    level = rt_hw_interrupt_disable();</span><br><span class="line">    systick_flag = <span class="number">1</span>;</span><br><span class="line">    rt_tick_increase();</span><br><span class="line">    systick_flag = <span class="number">0</span>;</span><br><span class="line">    rt_hw_interrupt_enable(level);</span><br><span class="line"></span><br><span class="line">    trigger_scheduling();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>其次是 <code>__syscall( 0 );</code> 触发的陷阱异常函数里:</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tricore_trap_yield_for_task</span><span class="params">( <span class="keyword">int</span> iTrapIdentification )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>( iTrapIdentification )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        trigger_scheduling();</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="comment">/* Unimplemented trap called. */</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>最后是 <code>GPSR[TRICORE_CPU_ID]-&gt;B.SETR = 1;</code> 触发的中断环境下的线程切换:</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noinline)) <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tricore_yield_for_interrupt</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    trigger_scheduling();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">IFX_INTERRUPT(KERNEL_YIELD, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">    tricore_yield_for_interrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="五-最后就是实现系统时钟节拍"><a href="#五-最后就是实现系统时钟节拍" class="headerlink" title="五. 最后就是实现系统时钟节拍"></a>五. 最后就是实现系统时钟节拍</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_systick_init</span><span class="params">( <span class="keyword">void</span> )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  IfxStm_Timer_Config timer_config;</span><br><span class="line">  IfxStm_Timer_initConfig(&amp;timer_config, STMs[TRICORE_CPU_ID]);</span><br><span class="line"></span><br><span class="line">  timer_config.base.frequency = RT_TICK_PER_SECOND;</span><br><span class="line">  timer_config.base.isrPriority = <span class="number">1</span>;</span><br><span class="line">  IfxStm_Timer_init(&amp;tricore_timers[TRICORE_CPU_ID], &amp;timer_config);</span><br><span class="line">  IfxStm_Timer_run(&amp;tricore_timers[TRICORE_CPU_ID]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>系统时钟节拍没啥好说的，就不在赘述了。</p>
-<h2 id="写在最后："><a href="#写在最后：" class="headerlink" title="写在最后："></a>写在最后：</h2><p>我的实现并不是最优解，一定是有更好的方式充分发挥 TriCore 的优势的。</p>
+<h3 id="1-头文件路径"><a href="#1-头文件路径" class="headerlink" title="1. 头文件路径"></a>1. 头文件路径</h3><p>通过分析编译参数，可以发现，在 <code>tinyusb/src</code>  TinyUSB 协议栈源码路径下，只有一个头文件路径，那就是自身 <code>tinyusb/src</code> 。之所以只声明了一个路径，是因为 TinyUSB 协议栈的 .c 文件的头文件包含都是相对路径。</p>
+<p>综上所述头文件路径只有一个： <code>tinyusb/src</code> </p>
+<h3 id="2-宏定义声明"><a href="#2-宏定义声明" class="headerlink" title="2. 宏定义声明"></a>2. 宏定义声明</h3><p>宏定义的声明有两个地方需要注意，一个是有些宏定义在编译参数里，有些宏定义则在 <code>tusb_config.h</code> 里进行配置。</p>
+<p>我们需要对每一个宏定义进行逐一确认，是否打开。这里我只说明下编译参数里的宏定义：</p>
+<p>以编译 stm32f103bluepill  开发板例程为例：</p>
+<p><code>STM32F103xB</code> 用于 <code>hw/bsp</code> 的编译。这个宏是与协议栈本身是无关的。</p>
+<p><code>CFG_TUSB_MCU=OPT_MCU_STM32F1</code> 用于 TinyUSB 协议栈已经移植好的 usb 驱动文件<code>tinyusb\src\portable</code> 目录下的文件。如果底层驱动自己写的话，那么也可以不用定义。</p>
+<p><code>tusb_config.h</code> 文件里的宏定义包含了 TinyUSB 协议栈 的一些主要配置信息：如使用了什么 RTOS ，usb 设备类型， buff 大小。。。等。</p>
+<h3 id="3-协议栈-C-文件的添加"><a href="#3-协议栈-C-文件的添加" class="headerlink" title="3. 协议栈 C 文件的添加"></a>3. 协议栈 C 文件的添加</h3><p>由于 TinyUSB 协议栈做了详尽的宏定义条件编译，所以我们只需要一股脑儿的将 <code>tinyusb/src</code> 目录下所有的 .c 文件添加进工程即可。<strong>除了 <code>tinyusb\src\portable</code> !!!</strong></p>
+<h3 id="4-底层-USB-驱动的适配"><a href="#4-底层-USB-驱动的适配" class="headerlink" title="4. 底层 USB 驱动的适配"></a>4. 底层 USB 驱动的适配</h3><p>TinyUSB 在 <code>tinyusb\src\portable\template\dcd_template.c</code> 目录下提供了一份参考实现，里面的函数都是桩函数。我们只需要将这份文件添加进工程即可。在编译完成通过后，然后再去一一实现这个文件里的桩函数。</p>
+<h3 id="5-上层应用-demo-测试"><a href="#5-上层应用-demo-测试" class="headerlink" title="5. 上层应用 demo 测试"></a>5. 上层应用 demo 测试</h3><p>以 cdc_msc 为例。可参考 <code>tinyusb/examples/device/cdc_msc/src/main.c</code> 的例子。主要关注 <code>tusb_init();</code> <code>tud_task();</code> <code>cdc_task();</code> 的使用。</p>
 
       
 
@@ -363,7 +251,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">TriCore</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">USB</a>
         		</li>
       		
 		</ul>
@@ -419,7 +307,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://balancetwk.github.io/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://balancetwk.github.io/2021/07/21/hexo-blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -433,18 +321,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/21/hexo-blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          TinyUSB使用记录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/01/hexo-blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">TriCore 内核学习笔记</div>
+    <a href="/2021/02/10/hexo-blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TriCore 与 RT-Thread（TC264 移植）</div>
       <i class="icon-circle-right"></i>
     </a>
   
