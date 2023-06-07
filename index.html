@@ -162,6 +162,562 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/">低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2022-04-23T09:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE-应用）"><a href="#低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE-应用）" class="headerlink" title="低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）"></a>低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）</h1><p>在 低功耗蓝牙协议栈入门（一） 中有提到 BLE 一共有四种 GAP 角色：广播者；观察者；外围设备；中央设备。一个设备可以同时支持多个角色。所有的蓝牙应用都是围绕着这四个角色来的。</p>
+<p>本文将结合 NimBLE 蓝牙协议栈的代码来介绍蓝牙的广播者与观察者这两种角色。</p>
+        
+          <a class="article-more-a" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（四）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/">低功耗蓝牙协议栈入门（四）空中抓包 （WireShark + nRF Sniffer）</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2022-04-16T12:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="蓝牙空中抓包-（WireShark-nRF-Sniffer）"><a href="#蓝牙空中抓包-（WireShark-nRF-Sniffer）" class="headerlink" title="蓝牙空中抓包 （WireShark + nRF Sniffer）"></a>蓝牙空中抓包 （WireShark + nRF Sniffer）</h1><p>话不多说！先上图展示下抓包的效果：(∩_∩)</p>
+<p><img src="/images/hexo-blog/Bluetooth/pic/%E6%8A%93%E5%8C%85%E6%80%BB%E5%9B%BE.png" alt="抓包总图"></p>
+        
+          <a class="article-more-a" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">低功耗蓝牙协议栈入门（三）NimBLE 返回值</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2022-04-07T12:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="NimBLE-返回值与蓝牙技术规范手册上的对应情况"><a href="#NimBLE-返回值与蓝牙技术规范手册上的对应情况" class="headerlink" title="NimBLE 返回值与蓝牙技术规范手册上的对应情况"></a>NimBLE 返回值与蓝牙技术规范手册上的对应情况</h1><p>NimBLE 的返回值在蓝牙技术规范的基础上又分为六类，并且可以通过查看返回值的第三个字节快速得知，是蓝牙协议栈的那一层出现问题，方便了 nimble 的开发者定位问题。</p>
+        
+          <a class="article-more-a" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">低功耗蓝牙协议栈入门（二）NimBLE 源码分析</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2021-11-24T13:28:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="NimBLE-源码分析"><a href="#NimBLE-源码分析" class="headerlink" title="NimBLE 源码分析"></a>NimBLE 源码分析</h1><p>NimBLE 是一个开源的蓝牙 5.1 协议栈，包含主机与控制器。采用 <a target="_blank" rel="noopener" href="https://github.com/apache/mynewt-nimble/blob/master/LICENSE">Apache-2.0 License</a>  开源协议，这意味着你可以免费学习并使用它。源码地址：<a target="_blank" rel="noopener" href="https://github.com/apache/mynewt-nimble">https://github.com/apache/mynewt-nimble</a> </p>
+        
+          <a class="article-more-a" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">低功耗蓝牙协议栈入门（一）预备知识</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2021-11-14T01:08:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="低功耗蓝牙协议栈预备知识"><a href="#低功耗蓝牙协议栈预备知识" class="headerlink" title="低功耗蓝牙协议栈预备知识"></a>低功耗蓝牙协议栈预备知识</h1><p>最近收到两块中科蓝讯芯片的板子 . 本来只是想跑跑原厂示例代码,调调 api 简单玩一下的,但是后来发现上手没那么简单…至少一些基本的蓝牙协议栈概念是需要学习了解的。本文是我阅读&lt;&lt;低功耗蓝牙开发权威指南&gt;&gt; 以及 <a target="_blank" rel="noopener" href="http://www.bluetooth.com/">www.bluetooth.com</a> 蓝牙官网文档的学习笔记，最终目的是将 NimBLE 协议栈给用起来！想要进一步深入理解低功耗蓝牙协议栈机制的建议去啃官方的文档！</p>
+<p>(注意:本文所有的描述都是围绕低功耗蓝牙来讲的,不涉及到经典蓝牙.)</p>
+        
+          <a class="article-more-a" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/nuttx_rtos/nuttx开发环境搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Nuttx 开发环境搭建及启动流程分析</a>
+    </h1>
+  
+
+        
+        <a href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="archive-article-date">
+  	<time datetime="2021-08-02T14:56:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Nuttx-开发环境搭建及启动流程分析"><a href="#Nuttx-开发环境搭建及启动流程分析" class="headerlink" title="Nuttx 开发环境搭建及启动流程分析"></a>Nuttx 开发环境搭建及启动流程分析</h1><p>NuttX 是一个实时操作系统(RTOS)，并且是对接口有着一定要求的系统。原生支持 POSIX 和 ANSI 标准接口，对于这些标准下不可用的接口功能，或不适合嵌入式环境的功能，则采用 Unix 和其他常见 RTOS（如 VxWorks）的标准 API。</p>
+<p>Nuttx 支持从8位到32位芯片。采用的开源协议是 Apache2.0 ，也就是完全开源免费的协议。可以使用 menuconfig 进行图形化配置裁剪</p>
+        
+          <a class="article-more-a" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-hexo_blog/USB2.0学习笔记/TinyUSB使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">TinyUSB使用记录</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="archive-article-date">
+  	<time datetime="2021-07-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TinyUSB-使用记录"><a href="#TinyUSB-使用记录" class="headerlink" title="TinyUSB 使用记录"></a>TinyUSB 使用记录</h1><p>TinyUSB 仓库目录结构如下：</p>
+        
+          <a class="article-more-a" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">USB</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hexo_blog/TriCore_Note/TriCore 与 RT-Thread（TC264 BSP）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -395,561 +951,9 @@
 
 
   
-    <article id="post-hexo_blog/RISC_V_Note/过程记录：自己编译一个 RISC-V opensbi" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20opensbi/">过程记录：自己编译一个 RISC-V opensbi</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20opensbi/" class="archive-article-date">
-  	<time datetime="2020-12-09T14:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="过程记录：编译一个-RISC-V-opensbi"><a href="#过程记录：编译一个-RISC-V-opensbi" class="headerlink" title="过程记录：编译一个 RISC-V opensbi"></a>过程记录：编译一个 RISC-V opensbi</h1><p>本文记录了作者编译 RISC-V opensbi 的过程。</p>
-        
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20opensbi/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20opensbi/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/过程记录：自己编译一个 RISC-V u-boot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20u-boot/">过程记录：自己编译一个 RISC-V U-BOOT</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20u-boot/" class="archive-article-date">
-  	<time datetime="2020-12-09T14:05:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="过程记录：编译一个-RISC-V-U-BOOT"><a href="#过程记录：编译一个-RISC-V-U-BOOT" class="headerlink" title="过程记录：编译一个 RISC-V U-BOOT"></a>过程记录：编译一个 RISC-V U-BOOT</h1><p>本文记录了作者编译 RISC-V U-BOOT 的过程。</p>
-        
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20u-boot/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20u-boot/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/过程记录：自己编译一个 RISC-V QEMU" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20QEMU/">过程记录：自己编译一个 RISC-V QEMU</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20QEMU/" class="archive-article-date">
-  	<time datetime="2020-12-09T12:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="过程记录：编译一个-RISC-V-QEMU"><a href="#过程记录：编译一个-RISC-V-QEMU" class="headerlink" title="过程记录：编译一个 RISC-V QEMU"></a>过程记录：编译一个 RISC-V QEMU</h1><p>本文记录了作者编译 RISC-V QEMU 的过程。</p>
-        
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20QEMU/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/09/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20QEMU/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/过程记录：自己编译一个 RISC-V 工具链" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/06/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20%E5%B7%A5%E5%85%B7%E9%93%BE/">过程记录：自己编译一个 RISC-V 工具链</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/06/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20%E5%B7%A5%E5%85%B7%E9%93%BE/" class="archive-article-date">
-  	<time datetime="2020-12-06T06:15:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="过程记录：编译一个-RISC-V-工具链"><a href="#过程记录：编译一个-RISC-V-工具链" class="headerlink" title="过程记录：编译一个 RISC-V 工具链"></a>过程记录：编译一个 RISC-V 工具链</h1><p>本文记录了作者编译 RISC-V 工具链的过程。其实作为一个嵌入式软件攻城狮只需要使用芯片厂商提供的工具链就好了。但是生命在于折腾！</p>
-<p>首先给大家看一下我的开发环境，电脑配置。15年的笔记本有点渣，整个编译过程共计耗时 70 分钟！</p>
-        
-          <a class="article-more-a" href="/2020/12/06/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20%E5%B7%A5%E5%85%B7%E9%93%BE/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/06/hexo_blog/RISC_V_Note/%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%9A%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%20RISC-V%20%E5%B7%A5%E5%85%B7%E9%93%BE/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/RISC-V 特权模式：机器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/05/hexo_blog/RISC_V_Note/RISC-V%20%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%9C%BA%E5%99%A8%E6%A8%A1%E5%BC%8F/">RISC-V 特权模式：机器模式</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/05/hexo_blog/RISC_V_Note/RISC-V%20%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%9C%BA%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-12-05T12:02:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="RISC-V-特权模式：机器模式"><a href="#RISC-V-特权模式：机器模式" class="headerlink" title="RISC-V 特权模式：机器模式"></a>RISC-V 特权模式：机器模式</h1><p>本文的内容主要是对 《riscv-privileged.pdf》Machine-Level ISA  章节的归纳与理解。</p>
-<hr>
-<p>RISC-V  架构定义了 机器模式（machine mode）。这个模式是每一个标准 RISC-V 处理器必须要实现的模式。<br>并且这个模式是 RISC-V 架构中拥有最高权限的模式。机器模式可以访问所有其他模式下的控制状态寄存器 （CSR）。<br>机器模式具备拦截和处理异常的能力。</p>
-        
-          <a class="article-more-a" href="/2020/12/05/hexo_blog/RISC_V_Note/RISC-V%20%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%9C%BA%E5%99%A8%E6%A8%A1%E5%BC%8F/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/05/hexo_blog/RISC_V_Note/RISC-V%20%E7%89%B9%E6%9D%83%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%9C%BA%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/RISC-V 的 PC 和 X0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/01/hexo_blog/RISC_V_Note/RISC-V%20%E7%9A%84%20PC%20%E5%92%8C%20X0/">RISC-V 的 程序计数器 (PC) 和 通用寄存器 (X0)</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/01/hexo_blog/RISC_V_Note/RISC-V%20%E7%9A%84%20PC%20%E5%92%8C%20X0/" class="archive-article-date">
-  	<time datetime="2020-12-01T12:10:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="RISC-V-的-程序计数器-PC-和-通用寄存器-X0"><a href="#RISC-V-的-程序计数器-PC-和-通用寄存器-X0" class="headerlink" title="RISC-V 的 程序计数器 (PC) 和 通用寄存器 (X0)"></a>RISC-V 的 程序计数器 (PC) 和 通用寄存器 (X0)</h1><p>本文比较短！</p>
-<p>主要讲 RISC-V 的 PC 与 X0 为什么要这么设计，对比 arm 的优势是什么。<br>同时解答上一篇文章自己的疑问：为什么通用寄存器 X0 的值为常数 0 。</p>
-        
-          <a class="article-more-a" href="/2020/12/01/hexo_blog/RISC_V_Note/RISC-V%20%E7%9A%84%20PC%20%E5%92%8C%20X0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/01/hexo_blog/RISC_V_Note/RISC-V%20%E7%9A%84%20PC%20%E5%92%8C%20X0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/RISC_V_Note/RISC-V 与 RT-Thread（K210 BSP）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/29/hexo_blog/RISC_V_Note/RISC-V%20%E4%B8%8E%20RT-Thread%EF%BC%88K210%20BSP%EF%BC%89/">RISC-V 与 RT-Thread（K210 内核移植）</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/29/hexo_blog/RISC_V_Note/RISC-V%20%E4%B8%8E%20RT-Thread%EF%BC%88K210%20BSP%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2020-11-29T03:20:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="RISC-V-与-RT-Thread（K210-内核移植）"><a href="#RISC-V-与-RT-Thread（K210-内核移植）" class="headerlink" title="RISC-V 与 RT-Thread（K210 内核移植）"></a>RISC-V 与 RT-Thread（K210 内核移植）</h1><p>本文将会对 RT-Thread 系统底层内核的移植以及 RT-Thread 如何与 RISC-V 相结合进行分析。</p>
-        
-          <a class="article-more-a" href="/2020/11/29/hexo_blog/RISC_V_Note/RISC-V%20%E4%B8%8E%20RT-Thread%EF%BC%88K210%20BSP%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RISC-V</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/29/hexo_blog/RISC_V_Note/RISC-V%20%E4%B8%8E%20RT-Thread%EF%BC%88K210%20BSP%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1057,6 +1061,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">TriCore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Bluetooth</a>
               </li>
             
             <div class="clearfix"></div>

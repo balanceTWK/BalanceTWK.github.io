@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="BalanceTWK的博客">
 <meta property="og:description" content="TriCore 与 RT-Thread（TC264 移植）本文记录了我对 TriCore 上下文切换运行机制的理解以及 TriCore 内核移植 API 的注释分析。由于水平有限，再加上阅读的手册都是英文的，所以理解上如果存在偏差是难免的，还请公众号留言指正！（事实上，写完这篇文章后，发现 TriCore 架构还有很多可以发掘的点，等有时间再去验证心中所想吧。。。）">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/disable_1.png">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/disable_2.png">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/ICR_IE.png">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/context.png">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/context_restore_save.png">
-<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/LinkWord.png">
+<meta property="og:image" content="https://balancetwk.com/picture/__disable()_1.png">
+<meta property="og:image" content="https://balancetwk.com/picture/__disable()_2.png">
+<meta property="og:image" content="https://balancetwk.com/picture/ICR_IE.png">
+<meta property="og:image" content="https://balancetwk.com/picture/context.png">
+<meta property="og:image" content="https://balancetwk.com/picture/context_restore_save.png">
+<meta property="og:image" content="https://balancetwk.com/picture/LinkWord.png">
 <meta property="article:published_time" content="2021-02-10T04:43:00.000Z">
-<meta property="article:modified_time" content="2023-06-07T00:16:04.204Z">
+<meta property="article:modified_time" content="2023-06-07T12:36:56.857Z">
 <meta property="article:author" content="BalanceTWK">
 <meta property="article:tag" content="TriCore">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://balancetwk.com/images/hexo-blog/TriCore_Note/picture/disable_1.png">
+<meta name="twitter:image" content="https://balancetwk.com/picture/__disable()_1.png">
   
     <link rel="alternative" href="/atom.xml" title="BalanceTWK的博客" type="application/atom+xml">
   
@@ -255,16 +255,16 @@
 
 <p><code>__disable();</code> 是工具链直接提供的函数。这个函数的作用就是关闭芯片全局中断。</p>
 <p>单步调试可以看到这条函数究竟做了什么：</p>
-<p><img src="/images/hexo-blog/TriCore_Note/picture/disable_1.png" alt="step1:__disable()"></p>
-<p><img src="/images/hexo-blog/TriCore_Note/picture/disable_2.png" alt="step2:__disable()"></p>
+<p><img src="/./picture/__disable()_1.png" alt="step1:__disable()"></p>
+<p><img src="/./picture/__disable()_2.png" alt="step2:__disable()"></p>
 <p>由上图可以看到，当执行完 <code>diable</code> 指令后，TriCore 的 ICR 寄存器的 IE 位由 1 变为 0 了。IE 位的功能说明如下图所示：</p>
-<p><img src="/images/hexo-blog/TriCore_Note/picture/ICR_IE.png" alt="ICR_IE"></p>
+<p><img src="/./picture/ICR_IE.png" alt="ICR_IE"></p>
 <p>IE 位是一个全局的中断使能位，当进入中断时，IE 位会自动的置为 0，当中断服务函数执行 rfe 指令后，会自动的恢复进中断前的值。另外， IE 位的值还可以被  <code>enable</code>; <code>disable</code>; <code>mtcr</code>; <code>bisr</code>; 等指令更新。</p>
 <h3 id="二-打开全局中断-rt-hw-interrupt-enable"><a href="#二-打开全局中断-rt-hw-interrupt-enable" class="headerlink" title="二. 打开全局中断 rt_hw_interrupt_enable()"></a>二. 打开全局中断 rt_hw_interrupt_enable()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">IFX_INLINE <span class="type">void</span> <span class="title function_">IfxCpu_restoreInterrupts</span><span class="params">(boolean enabled)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (enabled != FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        __enable();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">IFX_INLINE <span class="type">void</span> <span class="title function_">restoreInterrupts</span><span class="params">(boolean enabled)</span></span><br><span class="line">&#123;</span><br><span class="line">    IfxCpu_restoreInterrupts(enabled);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * void rt_hw_interrupt_enable(rt_base_t level);</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">rt_hw_interrupt_enable</span><span class="params">(<span class="type">rt_base_t</span> level)</span></span><br><span class="line">&#123;</span><br><span class="line">    restoreInterrupts((boolean)level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>有了前面关闭全局中断的分析，这里打开全局中断的就不再赘述了。<code>rt_hw_interrupt_enable</code> 最终执行的有效函数就是 <code>__enable();</code> ,这个函数对应的 CPU 指令就是 <code>enable</code> ,这条指令的作用就是将 TriCore 的 ICR 寄存器的 IE 位置为 1 。</p>
 <h3 id="三-实现线程栈初始化-rt-hw-stack-init"><a href="#三-实现线程栈初始化-rt-hw-stack-init" class="headerlink" title="三. 实现线程栈初始化 rt_hw_stack_init()"></a>三. 实现线程栈初始化 rt_hw_stack_init()</h3><p>在理解 <code>rt_hw_stack_init</code> 这个函数前，我需要先向大家介绍下 TriCore 的硬件上下文机制。</p>
-<h4 id="1-上下文类型区分"><a href="#1-上下文类型区分" class="headerlink" title="1. 上下文类型区分"></a>1. 上下文类型区分</h4><p><img src="/images/hexo-blog/TriCore_Note/picture/context.png" alt="context"></p>
+<h4 id="1-上下文类型区分"><a href="#1-上下文类型区分" class="headerlink" title="1. 上下文类型区分"></a>1. 上下文类型区分</h4><p><img src="/./picture/context.png" alt="context"></p>
 <p>如上图所示 TriCore 内核的上下文分为两组：</p>
 <ol>
 <li>上层上下文：外部中断；陷阱；函数调用；会自动保存恢复上下文。</li>
@@ -276,10 +276,10 @@
 <li>中断与陷阱处理函数在使用下层上下文寄存器之前必须保存下层上下文寄存器的值，结束处理后，需要恢复下层上下文寄存器。</li>
 </ol>
 <p><strong>什么时候会保存恢复上下文：</strong></p>
-<p><img src="/images/hexo-blog/TriCore_Note/picture/context_restore_save.png" alt="context_restore_save"></p>
+<p><img src="/./picture/context_restore_save.png" alt="context_restore_save"></p>
 <h4 id="2-上下文保存空间-CSA-（-Context-Save-Area-）"><a href="#2-上下文保存空间-CSA-（-Context-Save-Area-）" class="headerlink" title="2. 上下文保存空间 CSA （ Context Save Area ）"></a>2. 上下文保存空间 CSA （ Context Save Area ）</h4><p>TriCore 架构使用固定大小的上下文保存区域的链表。一个 CSA 存储 16 个 word ，按 16 个 word 的边界对齐，每个 CSA 正好可以完整的存储一个上层上下文或者下层上下文。CSAs 通过一个 LinkWord 链接在一起。</p>
 <p>LinkWord 的内容通过如下图所示的关系可以转换成一个有效的 CSA 地址。</p>
-<p><img src="/images/hexo-blog/TriCore_Note/picture/LinkWord.png" alt="LinkWord"></p>
+<p><img src="/./picture/LinkWord.png" alt="LinkWord"></p>
 <h4 id="3-如何访问-CSA"><a href="#3-如何访问-CSA" class="headerlink" title="3. 如何访问 CSA"></a>3. 如何访问 CSA</h4><p>TriCore 内核有三个寄存器用来操作访问 CSA 的信息：</p>
 <ol>
 <li>FCX： 这个寄存器的值用来指向全局的空闲的 CSA 列表头指针地址信息。（总是指向可用的 CSA 列表头指针）</li>
@@ -433,6 +433,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          TinyUSB使用记录
+        
+      </div>
+    </a>
+  
   
     <a href="/2021/02/01/hexo_blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">TriCore 内核学习笔记</div>
@@ -574,6 +583,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">TriCore</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Bluetooth</a>
               </li>
             
             <div class="clearfix"></div>
