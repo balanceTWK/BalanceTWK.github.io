@@ -6,15 +6,35 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://balancetwk.com">
-  <title>BalanceTWK的博客</title>
+  <title>车载LIN通信协议 | BalanceTWK的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="BalanceTWK的博客">
-<meta property="og:url" content="https://balancetwk.com/index.html">
+  <meta name="description" content="Lin 通信协议一.简介​	LIN(Local Interconnect Network) 是一种基于 uart 的低成本串行通信协议，是单总线协议，总线电平一般为12V，传输速率最高为20kbps。常见于汽车主机和各个设备之间的通信。如“前大灯”、“转向信号”、“雨刮器”、“空调”、“雨刮器”等这些设备的控制大都是使用 LIN 通信的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="车载LIN通信协议">
+<meta property="og:url" content="https://balancetwk.com/2024/01/25/hexo_blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="BalanceTWK的博客">
+<meta property="og:description" content="Lin 通信协议一.简介​	LIN(Local Interconnect Network) 是一种基于 uart 的低成本串行通信协议，是单总线协议，总线电平一般为12V，传输速率最高为20kbps。常见于汽车主机和各个设备之间的通信。如“前大灯”、“转向信号”、“雨刮器”、“空调”、“雨刮器”等这些设备的控制大都是使用 LIN 通信的。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%B1%BD%E8%BD%A6%E4%B8%8A%E7%9A%84LIN.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/LIN%E7%BD%91%E7%BB%9C.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/LIN%E6%B3%A2%E5%BD%A2.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%90%8C%E6%AD%A5%E9%97%B4%E9%9A%94%E6%AE%B5.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%90%8C%E6%AD%A5%E6%AE%B5.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%8F%97%E4%BF%9D%E6%8A%A4ID.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%B8%A7%E7%9A%84%E7%B1%BB%E5%9E%8B.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%95%B0%E6%8D%AE%E6%AE%B5.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%A0%A1%E9%AA%8C%E5%92%8C%E6%AE%B5.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E8%8A%82%E7%82%B9%E4%B8%8E%E4%BB%8E%E6%9C%BA%E8%8A%82%E7%82%B9.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BA.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%BB%8E%E6%9C%BA%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BA.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E8%8A%82%E7%82%B9%E5%8F%91%E5%B8%83%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%BB%8E%E6%9C%BA%E8%8A%82%E7%82%B9%E5%8F%91%E5%B8%83%E6%95%B0%E6%8D%AE.png">
+<meta property="article:published_time" content="2024-01-25T04:30:00.000Z">
+<meta property="article:modified_time" content="2024-01-25T04:45:22.275Z">
 <meta property="article:author" content="BalanceTWK">
+<meta property="article:tag" content="嵌入式随笔">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://balancetwk.com/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%B1%BD%E8%BD%A6%E4%B8%8A%E7%9A%84LIN.png">
   
     <link rel="alternative" href="/atom.xml" title="BalanceTWK的博客" type="application/atom+xml">
   
@@ -166,16 +186,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-hexo_blog/车载LIN通信协议/车载LIN通信协议" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-hexo_blog/车载LIN通信协议/车载LIN通信协议" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/01/25/hexo_blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">车载LIN通信协议</a>
+    <h1 class="article-title" itemprop="name">
+      车载LIN通信协议
     </h1>
   
 
@@ -189,11 +207,85 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Lin-通信协议"><a href="#Lin-通信协议" class="headerlink" title="Lin 通信协议"></a>Lin 通信协议</h1><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h2><p>​	LIN(Local Interconnect Network) 是一种基于 uart 的低成本串行通信协议，是单总线协议，总线电平一般为12V，传输速率最高为20kbps。常见于汽车主机和各个设备之间的通信。如“前大灯”、“转向信号”、“雨刮器”、“空调”、“雨刮器”等这些设备的控制大都是使用 LIN 通信的。</p>
-        
-          <a class="article-more-a" href="/2024/01/25/hexo_blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/#more">more >></a>
-        
+<span id="more"></span>
+
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%B1%BD%E8%BD%A6%E4%B8%8A%E7%9A%84LIN.png" alt="汽车上的LIN"></p>
+<h2 id="二-网络构成"><a href="#二-网络构成" class="headerlink" title="二.网络构成"></a>二.网络构成</h2><p>​	整个汽车系统中，LIN网络往往与CAN(Controller Area Network，控制器局域网)总线相连，作为CAN网络的子网络，或者说是一种补充。之所以这么做是因为LIN通信的成本相比于CAN更低，LIN总线的速率虽然较低，最大为20Kbps，CAN总线最高可达1Mbps，但是LIN用于控制“前大灯”、“转向信号”、“雨刮器”、“空调”、“雨刮器”这些设备，通信速率是足够的。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/LIN%E7%BD%91%E7%BB%9C.png" alt="LIN网络"></p>
+<h2 id="三-数据传输段"><a href="#三-数据传输段" class="headerlink" title="三.数据传输段"></a>三.数据传输段</h2><p>​	LIN 数据以帧为单位，每一帧由“同步间隔段”、“同步段”、“受保护ID段”、“数据段”、“校验和段”组成。其中“同步间隔段”、“同步段”、“受保护ID段”组合在一起作为<strong>帧头</strong>。“数据段”、“校验和段”组合在一起作为<strong>应答</strong>。<strong>帧头</strong>由主机发送。从机被动接收<strong>帧头</strong>，并判断是否返回<strong>应答</strong>数据，或接收之后紧跟的<strong>应答</strong>数据。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/LIN%E6%B3%A2%E5%BD%A2.png" alt="LIN波形"></p>
+<h3 id="1-同步间隔段"><a href="#1-同步间隔段" class="headerlink" title="1.同步间隔段"></a>1.同步间隔段</h3><p>（特殊的数据传输格式）同步间隔段需要至少持续 13 位时钟时间的低电平，然后紧跟至少持续 1 位时钟时间的高电平。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%90%8C%E6%AD%A5%E9%97%B4%E9%9A%94%E6%AE%B5.png" alt="同步间隔段"></p>
+<h3 id="2-同步段"><a href="#2-同步段" class="headerlink" title="2.同步段"></a>2.同步段</h3><p>（标准 UART 数据传输格式）固定值0x55，转换为二进制为 01010101。同步段可以用于同步基准时钟，保持与主机节点的时钟一样。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%90%8C%E6%AD%A5%E6%AE%B5.png" alt="同步段"></p>
+<h3 id="3-受保护ID段"><a href="#3-受保护ID段" class="headerlink" title="3.受保护ID段"></a>3.受保护ID段</h3><p>（标准 UART 数据传输格式）受保护 ID 段的前 6 位叫作<strong>帧 ID</strong>，加上两个奇偶校验位后称作<strong>受保护 ID</strong>。<strong>帧 ID</strong> 的范围在 0x00～0x3F 之间，共 64 个。不会出现全 0 或全 1 的情况，如果从机节点收到了“0xFF”或“0x00”，可判断为传输错误。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%8F%97%E4%BF%9D%E6%8A%A4ID.png" alt="受保护ID"></p>
+<p>校验位计算公式如下：</p>
+<blockquote>
+<p>P0 &#x3D; ID0 ⊕ ID1 ⊕ ID2 ⊕ ID4<br>P1 &#x3D; ～(ID1 ⊕ ID3 ⊕ ID4 ⊕ ID5)</p>
+</blockquote>
+<p>不同的帧 ID 代表不同帧类型：</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E5%B8%A7%E7%9A%84%E7%B1%BB%E5%9E%8B.png" alt="帧的类型"></p>
+<h3 id="4-数据段"><a href="#4-数据段" class="headerlink" title="4.数据段"></a>4.数据段</h3><p>（标准 UART 数据传输格式）一帧LIN数据，包含一个或多个数据段，低字节先发送，高字节后发送。数据段内容所包含的意义由开发者自定义。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%95%B0%E6%8D%AE%E6%AE%B5.png" alt="数据段"></p>
+<h3 id="5-校验和段"><a href="#5-校验和段" class="headerlink" title="5.校验和段"></a>5.校验和段</h3><p>校验和分为<strong>标准型校验和</strong>与<strong>增强型校验和</strong>。</p>
+<ol>
+<li>标准型校验和的校验对象：数据段各字节。</li>
+<li>增强型校验和的校验对象：数据段各字节以及受保护 ID。</li>
+</ol>
+<p>校验和段对帧中所传输的内容进行校验。校验方法为将<strong>校验对象</strong>的各字节作带进位二进制加法(每当结果大于等于 256 时就减去 255)，并将所得最终的和逐位取反，以该结果作为要发送的校验和。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E6%A0%A1%E9%AA%8C%E5%92%8C%E6%AE%B5.png" alt="校验和段"></p>
+<h2 id="四-LIN节点"><a href="#四-LIN节点" class="headerlink" title="四.LIN节点"></a>四.LIN节点</h2><p>主机节点包含<strong>主机任务</strong>和<strong>从机任务</strong>，从机节点只包含<strong>从机任务</strong>。下图为 LIN 总线拓扑图：</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E8%8A%82%E7%82%B9%E4%B8%8E%E4%BB%8E%E6%9C%BA%E8%8A%82%E7%82%B9.png" alt="主机节点与从机节点"></p>
+<h3 id="主机任务"><a href="#主机任务" class="headerlink" title="主机任务"></a>主机任务</h3><p><strong>主机任务</strong>会发送帧头（同步间隔段、同步段和受保护 ID 段）。下图为主机任务状态机：</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BA.png" alt="主机任务状态机"></p>
+<h3 id="从机任务"><a href="#从机任务" class="headerlink" title="从机任务"></a>从机任务</h3><p><strong>从机任务</strong>接收主机发送的帧头，根据帧头所包含的信息判断是否<strong>发送应答&#x2F;接收应答&#x2F;不回应</strong>。下图为从机任务状态机：</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%BB%8E%E6%9C%BA%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%9C%BA.png" alt="从机任务状态机"></p>
+<h2 id="五-LIN总线上的一帧数据构成"><a href="#五-LIN总线上的一帧数据构成" class="headerlink" title="五.LIN总线上的一帧数据构成"></a>五.LIN总线上的一帧数据构成</h2><p>当主机节点发送数据时，主机节点的<strong>主机任务</strong>会发送帧头，主机节点的<strong>从机任务</strong>会发送应答数据。从机节点处于静默状态，不回去动总线，被动接收数据。在LIN总线上拟合的数据波形即为主机节点的发送波形。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%B8%BB%E6%9C%BA%E8%8A%82%E7%82%B9%E5%8F%91%E5%B8%83%E6%95%B0%E6%8D%AE.png" alt="主机节点发布数据"></p>
+<p>从机节点不会主动发送数据，需要主机节点的<strong>主机任务</strong>发送对应的帧头，从机节点的<strong>从机任务</strong>会根据总线上的帧头判断是否需要发送应答数据，如果判断需要发送数据，就会发送“数据段”，”校验和段“。在LIN总线上拟合的数据波形即为主机节点的发送波形+从机节点的发送波形。</p>
+<p><img src="/images/hexo-blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/pic/%E4%BB%8E%E6%9C%BA%E8%8A%82%E7%82%B9%E5%8F%91%E5%B8%83%E6%95%B0%E6%8D%AE.png" alt="从机节点发布数据"></p>
+<h2 id="六-总结"><a href="#六-总结" class="headerlink" title="六.总结"></a>六.总结</h2><p>LIN 通信协议的主要优势在于其简单性、成本效益和可靠性，特别适用于低速、低成本的车辆内部通信。</p>
+<ol>
+<li>低成本：LIN协议设计用于替代更复杂、更昂贵的网络系统，如CAN（Controller Area Network）。它使用单线传输和简单的节点硬件，显著降低了系统成本。</li>
+<li>简单的网络结构：LIN网络的结构简单，易于设计和实现。这使得它适合于控制汽车中的简单设备，如窗户调节器、门锁等。</li>
+<li>较低的资源要求：与其他更复杂的通信协议相比，LIN节点需要的计算资源较少，因此可以使用更便宜、更低性能的微控制器。</li>
+<li>易于集成和扩展：LIN协议可以轻松集成到现有的汽车电子系统中，并且可以与其他网络协议（如CAN）一起工作，为更复杂的系统提供辅助通信通道。</li>
+<li>适合低速通信：LIN协议适合于不需要高速数据传输的应用，如传感器数据读取和执行器控制。</li>
+<li>确定性的通信：通过主节点的定时控制，LIN网络提供了确定性的通信，这对于确保消息在预定时间内传递非常重要。</li>
+<li>可靠性：尽管简单，LIN协议还是提供了基本的错误检测和校验机制，以保证通信的可靠性。</li>
+<li>标准化：作为一个国际标准，LIN协议享有广泛的行业支持和兼容性，确保了不同供应商的设备可以无缝协作。</li>
+</ol>
+<p>这些优势使得LIN协议非常适合用于汽车中的非关键性应用，以及其他需要成本效益和简单网络结构的场合。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>欢迎关注我的公众号<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/微信公众号.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -213,16 +305,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2024/01/25/hexo_blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://balancetwk.com/2024/01/25/hexo_blog/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/%E8%BD%A6%E8%BD%BDLIN%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -242,721 +393,14 @@
 
 
 
-
-  
-    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（五）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/">低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）</a>
-    </h1>
-  
-
-        
-        <a href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-04-23T09:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE-应用）"><a href="#低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE-应用）" class="headerlink" title="低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）"></a>低功耗蓝牙协议栈入门（五）广播者与观察者（NimBLE 应用）</h1><p>在 低功耗蓝牙协议栈入门（一） 中有提到 BLE 一共有四种 GAP 角色：广播者；观察者；外围设备；中央设备。一个设备可以同时支持多个角色。所有的蓝牙应用都是围绕着这四个角色来的。</p>
-<p>本文将结合 NimBLE 蓝牙协议栈的代码来介绍蓝牙的广播者与观察者这两种角色。</p>
-        
-          <a class="article-more-a" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/04/23/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（四）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/">低功耗蓝牙协议栈入门（四）空中抓包 （WireShark + nRF Sniffer）</a>
-    </h1>
-  
-
-        
-        <a href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-04-16T12:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="蓝牙空中抓包-（WireShark-nRF-Sniffer）"><a href="#蓝牙空中抓包-（WireShark-nRF-Sniffer）" class="headerlink" title="蓝牙空中抓包 （WireShark + nRF Sniffer）"></a>蓝牙空中抓包 （WireShark + nRF Sniffer）</h1><p>话不多说！先上图展示下抓包的效果：(∩_∩)</p>
-<p><img src="/images/hexo-blog/Bluetooth/pic/%E6%8A%93%E5%8C%85%E6%80%BB%E5%9B%BE.png" alt="抓包总图"></p>
-        
-          <a class="article-more-a" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/04/16/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（三）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">低功耗蓝牙协议栈入门（三）NimBLE 返回值</a>
-    </h1>
-  
-
-        
-        <a href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2022-04-07T12:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NimBLE-返回值与蓝牙技术规范手册上的对应情况"><a href="#NimBLE-返回值与蓝牙技术规范手册上的对应情况" class="headerlink" title="NimBLE 返回值与蓝牙技术规范手册上的对应情况"></a>NimBLE 返回值与蓝牙技术规范手册上的对应情况</h1><p>NimBLE 的返回值在蓝牙技术规范的基础上又分为六类，并且可以通过查看返回值的第三个字节快速得知，是蓝牙协议栈的那一层出现问题，方便了 nimble 的开发者定位问题。</p>
-        
-          <a class="article-more-a" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/04/07/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">低功耗蓝牙协议栈入门（二）NimBLE 源码分析</a>
-    </h1>
-  
-
-        
-        <a href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-11-24T13:28:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="NimBLE-源码分析"><a href="#NimBLE-源码分析" class="headerlink" title="NimBLE 源码分析"></a>NimBLE 源码分析</h1><p>NimBLE 是一个开源的蓝牙 5.1 协议栈，包含主机与控制器。采用 <a target="_blank" rel="noopener" href="https://github.com/apache/mynewt-nimble/blob/master/LICENSE">Apache-2.0 License</a>  开源协议，这意味着你可以免费学习并使用它。源码地址：<a target="_blank" rel="noopener" href="https://github.com/apache/mynewt-nimble">https://github.com/apache/mynewt-nimble</a> </p>
-        
-          <a class="article-more-a" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/24/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/Bluetooth/蓝牙协议栈入门学习笔记（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">低功耗蓝牙协议栈入门（一）预备知识</a>
-    </h1>
-  
-
-        
-        <a href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-11-14T01:08:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="低功耗蓝牙协议栈预备知识"><a href="#低功耗蓝牙协议栈预备知识" class="headerlink" title="低功耗蓝牙协议栈预备知识"></a>低功耗蓝牙协议栈预备知识</h1><p>最近收到两块中科蓝讯芯片的板子 . 本来只是想跑跑原厂示例代码,调调 api 简单玩一下的,但是后来发现上手没那么简单…至少一些基本的蓝牙协议栈概念是需要学习了解的。本文是我阅读&lt;&lt;低功耗蓝牙开发权威指南&gt;&gt; 以及 <a target="_blank" rel="noopener" href="http://www.bluetooth.com/">www.bluetooth.com</a> 蓝牙官网文档的学习笔记，最终目的是将 NimBLE 协议栈给用起来！想要进一步深入理解低功耗蓝牙协议栈机制的建议去啃官方的文档！</p>
-<p>(注意:本文所有的描述都是围绕低功耗蓝牙来讲的,不涉及到经典蓝牙.)</p>
-        
-          <a class="article-more-a" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bluetooth</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/11/14/hexo_blog/Bluetooth/%E8%93%9D%E7%89%99%E5%8D%8F%E8%AE%AE%E6%A0%88%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/nuttx_rtos/nuttx开发环境搭建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">Nuttx 开发环境搭建及启动流程分析</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="archive-article-date">
-  	<time datetime="2021-08-02T14:56:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Nuttx-开发环境搭建及启动流程分析"><a href="#Nuttx-开发环境搭建及启动流程分析" class="headerlink" title="Nuttx 开发环境搭建及启动流程分析"></a>Nuttx 开发环境搭建及启动流程分析</h1><p>NuttX 是一个实时操作系统(RTOS)，并且是对接口有着一定要求的系统。原生支持 POSIX 和 ANSI 标准接口，对于这些标准下不可用的接口功能，或不适合嵌入式环境的功能，则采用 Unix 和其他常见 RTOS（如 VxWorks）的标准 API。</p>
-<p>Nuttx 支持从8位到32位芯片。采用的开源协议是 Apache2.0 ，也就是完全开源免费的协议。可以使用 menuconfig 进行图形化配置裁剪</p>
-        
-          <a class="article-more-a" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">嵌入式随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/02/hexo_blog/nuttx_rtos/nuttx%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/USB2.0学习笔记/TinyUSB使用记录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">TinyUSB使用记录</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="archive-article-date">
-  	<time datetime="2021-07-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="TinyUSB-使用记录"><a href="#TinyUSB-使用记录" class="headerlink" title="TinyUSB 使用记录"></a>TinyUSB 使用记录</h1><p>TinyUSB 仓库目录结构如下：</p>
-        
-          <a class="article-more-a" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">USB</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/21/hexo_blog/USB2.0%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/TinyUSB%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/TriCore_Note/TriCore 与 RT-Thread（TC264 BSP）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/10/hexo_blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/">TriCore 与 RT-Thread（TC264 移植）</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/10/hexo_blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-02-10T04:43:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="TriCore-与-RT-Thread（TC264-移植）"><a href="#TriCore-与-RT-Thread（TC264-移植）" class="headerlink" title="TriCore 与 RT-Thread（TC264 移植）"></a>TriCore 与 RT-Thread（TC264 移植）</h1><p>本文记录了我对 TriCore 上下文切换运行机制的理解以及 TriCore 内核移植 API 的注释分析。由于水平有限，再加上阅读的手册都是英文的，所以理解上如果存在偏差是难免的，还请公众号留言指正！（事实上，写完这篇文章后，发现 TriCore 架构还有很多可以发掘的点，等有时间再去验证心中所想吧。。。）</p>
-        
-          <a class="article-more-a" href="/2021/02/10/hexo_blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">TriCore</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/10/hexo_blog/TriCore_Note/TriCore%20%E4%B8%8E%20RT-Thread%EF%BC%88TC264%20BSP%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hexo_blog/TriCore_Note/TriCore 内核学习笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/02/01/hexo_blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">TriCore 内核学习笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2021/02/01/hexo_blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-02-01T13:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="TriCore-内核学习笔记"><a href="#TriCore-内核学习笔记" class="headerlink" title="TriCore 内核学习笔记"></a>TriCore 内核学习笔记</h1><p>前段时间在 TriCore 上肝了一个月的 rt-thread 系统移植，终于初步移植成功.所以做下知识整理，本文更多关注的是如何给 TriCore 移植操作系统，整理如下：</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>TriCore 是英飞凌半导体公司专为嵌入式实时系统设计的 32 位精简指令（RISC）的芯片架构。汽车电子上用的比较多。低中断延迟；硬件自动上下文切换 都是它的特点。</p>
-        
-          <a class="article-more-a" href="/2021/02/01/hexo_blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">TriCore</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/02/01/hexo_blog/TriCore_Note/TriCore%20%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -979,8 +423,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
